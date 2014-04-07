@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:f="http://java.sun.com/jsf/core">
+
+<h:head>
+    <title>Lars loggar (JSF)</title>
+</h:head>
+<h:body>
+    <h2>Lars loggar</h2>
+    <h:form>
+        <h:commandButton value="Värmepumpsgrafer" action="#{vPGraphGenerator.createVpGraph}"/>
+        <h:commandButton value="Energigrafer" action="#{energyGraphGenerator.createEnergyGraph}"/>
+
+        <br/>
+        <br/>
+        <hr/>
+        <h3>Manuella elmätardiagram</h3>
+
+        <h:selectOneRadio>
+            <f:selectItem itemValue="Power" itemLabel="Effekt" />
+            <f:selectItem itemValue="Energy" itemLabel="Energi" />
+        </h:selectOneRadio>
+
+        <br/>
+        <h:panelGrid columns="4">
+            Starttid
+            <h:inputText label="Starttid" value="#{energyGraphGenerator.startTime}"/>
+            Sluttid
+            <h:inputText label="Sluttid" value="#{energyGraphGenerator.endTime}"/>
+        </h:panelGrid>
+        <br/>
+        <h:panelGrid columns="2">
+            Förskjutning
+            <h:inputText label="Förskjutning" value="#{energyGraphGenerator.diff}"/>
+        </h:panelGrid>
+        <br/>
+
+        <h:commandButton value="Skapa manuella diagram" action="#{energyGraphGenerator.createCompareGraph}"/>
+    </h:form>
+</h:body>
+</html>

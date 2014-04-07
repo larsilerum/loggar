@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <title>Håkans loggar</title>
+</h:head>
+<h:body>
+    <h2>Håkans loggar</h2>
+    <h:form>
+        <h:commandButton value="Elmätardiagram" action="#{energyGraphGenerator.createEnergyGraph}"/>
+        <h:commandButton value="Temperaturdiagram" action="#{halarTempGenerator.createGraphs}"/>
+        <br/>
+        <br/>
+        <hr/>
+        <p:tabView effect="fade">
+            <p:tab title="Temperaturdiagram">
+                <h:panelGrid columns="4">
+                    <h:panelGroup>
+                        <h3>Välj data source</h3>
+                        <h:selectManyCheckbox value="#{halarCustomDiagramGenerator.selectedDataSources}" layout="pageDirection">
+                            <f:selectItems value="#{halarCustomDiagramGenerator.dataSources}" />
+                        </h:selectManyCheckbox>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h3>Starttid</h3>
+                        <p:calendar value="#{halarCustomDiagramGenerator.startDate}"
+                                    effect="fadeIn" showButtonPanel="true" locale="sv_SE"
+                                    pattern="yyyy-MM-dd HH:mm"/>
+                    </h:panelGroup>
+                    <h:panelGroup>
+                        <h3>Sluttid</h3>
+                        <p:calendar value="#{halarCustomDiagramGenerator.endDate}"
+                                    effect="fadeIn" showButtonPanel="true" locale="sv_SE"
+                                    pattern="yyyy-MM-dd HH:mm"/>
+                    </h:panelGroup>
+                </h:panelGrid>
+                <h:commandButton value="Skapa diagram" action="#{halarCustomDiagramGenerator.createGraph}"/>
+            </p:tab>
+            <p:tab title="Elmätardiagram">
+                <h3>Manuella elmätardiagram</h3>
+
+                <h:selectOneRadio>
+                    <f:selectItem itemValue="Power" itemLabel="Effekt" />
+                    <f:selectItem itemValue="Energy" itemLabel="Energi" />
+                </h:selectOneRadio>
+
+                <br/>
+                <h:panelGrid columns="4">
+                    Starttid
+                    <h:inputText label="Starttid" value="#{energyGraphGenerator.startTime}"/>
+                    Sluttid
+                    <h:inputText label="Sluttid" value="#{energyGraphGenerator.endTime}"/>
+                </h:panelGrid>
+                <br/>
+                <h:panelGrid columns="2">
+                    Förskjutning
+                    <h:inputText label="Förskjutning" value="#{energyGraphGenerator.diff}"/>
+                </h:panelGrid>
+                <br/>
+                <h:commandButton value="Skapa manuella diagram" action="#{energyGraphGenerator.createCompareGraph}"/>
+                <br/>
+            </p:tab>
+
+        </p:tabView>
+
+    </h:form>
+</h:body>
+</html>
