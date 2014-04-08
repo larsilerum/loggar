@@ -92,10 +92,10 @@
                 <artifactId>wildfly-maven-plugin</artifactId>
                 <version>1.0.0.Final</version>
                 <configuration>
-                    <hostname>larsilerum.homenet.org</hostname>
+                    <hostname>${wildfly-hostname}</hostname>
                     <port>9990</port>
-                    <username>adminuser</username>
-                    <password>wertQ"34</password>
+                    <username>${wildfly-username}</username>
+                    <password>${wildfly-password}</password>
                 </configuration>
                 <executions>
                     <execution>
