@@ -30,13 +30,13 @@
                         <h3>Starttid</h3>
                         <p:calendar value="#{halarCustomDiagramGenerator.startDate}"
                                     effect="fadeIn" showButtonPanel="true" locale="sv_SE"
-                                    pattern="yyyy-MM-dd HH:mm"/>
+                                    pattern="yyyy-MM-dd HH:mm" readonly="true"/>
                     </h:panelGroup>
                     <h:panelGroup>
                         <h3>Sluttid</h3>
                         <p:calendar value="#{halarCustomDiagramGenerator.endDate}"
                                     effect="fadeIn" showButtonPanel="true" locale="sv_SE"
-                                    pattern="yyyy-MM-dd HH:mm"/>
+                                    pattern="yyyy-MM-dd HH:mm" readonly="true"/>
                     </h:panelGroup>
                 </h:panelGrid>
                 <h:commandButton value="Skapa diagram" action="#{halarCustomDiagramGenerator.createGraph}"/>
