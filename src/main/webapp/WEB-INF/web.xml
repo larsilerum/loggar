@@ -6,7 +6,7 @@
   </session-config>
     <!-- Welcome page -->
     <welcome-file-list>
-        <welcome-file>faces/startHalar.xhtml</welcome-file>
+        <welcome-file>faces/startPage.xhtml</welcome-file>
     </welcome-file-list>
 
 </web-app>

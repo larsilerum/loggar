@@ -34,9 +34,10 @@ public class EnergyGraphGenerator implements Serializable {
     }
 
     public String createCompareGraph() {
+        String rrdDir = System.getProperty("rrd.energi.dir");
         String command = "rrdtool graph /tmp/compare.png --lower-limit=0 --width=600 --height=300 --start=" + startTime + " --end=" + endTime +
-                " DEF:effekt1=/home/pi/energilog/energi.rrd:effekt:AVERAGE" +
-                " DEF:effekt2=/home/pi/energilog/energi.rrd:effekt:AVERAGE:end=" + endTime + "-" + diff + ":start=" + startTime + "-" + diff +
+                " DEF:effekt1=" + rrdDir + "/energi.rrd:effekt:AVERAGE" +
+                " DEF:effekt2=" + rrdDir + "/energi.rrd:effekt:AVERAGE:end=" + endTime + "-" + diff + ":start=" + startTime + "-" + diff +
                 " LINE1:effekt1#ff0000" +
                 " SHIFT:effekt2:" + diff +
                 " LINE1:effekt2#00ff00";
