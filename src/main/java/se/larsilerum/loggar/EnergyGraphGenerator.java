@@ -18,11 +18,13 @@ public class EnergyGraphGenerator implements Serializable {
 
     public String createEnergyGraph() {
         try {
-            createGraph("-1h", "now", "effekt-1h", PowerType.POWER);
-            createGraph("-6h", "now", "effekt-6h", PowerType.POWER);
-            createGraph("-1d", "now", "effekt-1d", PowerType.POWER);
-            createGraph("-1m", "now", "energi-1m", PowerType.ENERGY);
-            createGraph("-1y", "now", "energi-1y", PowerType.ENERGY);
+            String rrdDir = System.getProperty("rrd.energi.dir");
+            System.out.println("rrdDir = " + rrdDir);
+            createGraph("-1h", "now", "effekt-1h", PowerType.POWER, rrdDir);
+            createGraph("-6h", "now", "effekt-6h", PowerType.POWER, rrdDir);
+            createGraph("-1d", "now", "effekt-1d", PowerType.POWER, rrdDir);
+            createGraph("-1m", "now", "energi-1m", PowerType.ENERGY, rrdDir);
+            createGraph("-1y", "now", "energi-1y", PowerType.ENERGY, rrdDir);
         } catch (IOException e) {
             return "ErrorPage";
         } catch (InterruptedException e) {
@@ -62,26 +64,26 @@ public class EnergyGraphGenerator implements Serializable {
         return errorMessage;
     }
 
-    private void createGraph(String start, String end, String fileName, PowerType type) throws IOException, InterruptedException {
+    private void createGraph(String start, String end, String fileName, PowerType type, String rrdDir) throws IOException, InterruptedException {
         String createCommand ;
         if (type.equals(PowerType.ENERGY)) {
-            createCommand = getEnergyString(start, fileName);
+            createCommand = getEnergyString(start, fileName, rrdDir);
         } else {
-            createCommand = getPowerString(start, end, fileName);
+            createCommand = getPowerString(start, end, fileName, rrdDir);
         }
         Process process = Runtime.getRuntime().exec(createCommand);
         process.waitFor();
 
     }
 
-    private String getEnergyString(String start, String fileName) {
+    private String getEnergyString(String start, String fileName, String rrdDir) {
         return "rrdtool graph /tmp/" + fileName + ".png --lower-limit=0 --width=600 --height=300 --step 86400 --start=" +
-                start + " DEF:effekt=/home/pi/energilog/energi.rrd:effekt:AVERAGE CDEF:energidygn=effekt,24,*,1000,/ CDEF:energiMedel=energidygn,1000000,TRENDNAN LINE1:energidygn#cccccc LINE1:energiMedel#ff0000";
+                start + " DEF:effekt=" + rrdDir + "/energi.rrd:effekt:AVERAGE CDEF:energidygn=effekt,24,*,1000,/ CDEF:energiMedel=energidygn,1000000,TRENDNAN LINE1:energidygn#cccccc LINE1:energiMedel#ff0000";
     }
 
-    private String getPowerString(String start, String end, String fileName) {
+    private String getPowerString(String start, String end, String fileName, String rrdDir) {
         return "rrdtool graph /tmp/" + fileName + ".png --lower-limit=0 --width=600 --height=300 --start=" + start + " --end=" + end +
-            " DEF:effekt=/home/pi/energilog/energi.rrd:effekt:AVERAGE LINE1:effekt#ff0000";
+            " DEF:effekt=" + rrdDir + "/energi.rrd:effekt:AVERAGE LINE1:effekt#ff0000";
     }
 
 
