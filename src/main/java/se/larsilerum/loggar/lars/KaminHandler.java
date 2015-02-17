@@ -16,9 +16,9 @@ public class KaminHandler {
         try {
             PrintWriter printWriter = new PrintWriter(file);
             Date date = new Date();
-            printWriter.append(Long.toString(date.getTime()));
+            printWriter.append(Long.toString(date.getTime() / 1000));
             printWriter.append("\n");
-            printWriter.append(Long.toString(date.getTime() + 1000 * 3600 * 3));
+            printWriter.append(Long.toString(date.getTime() / 1000  + 3600 * 3));
             printWriter.append("\n");
             printWriter.close();
 
